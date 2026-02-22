@@ -1,5 +1,7 @@
 ---
 title: Hello, World!
+date: 2026-01-14
+summary: A short introduction to what I am publishing here and how I think about useful technical writing.
 ---
 
 # Hello, World!
@@ -24,4 +26,4 @@ Connects five constants: $e$, $i$, $\pi$, $1$, and $0$.
 
 ---
 
-[← Back to Blog](../blog)
+[← Back to Blog]({{ '/blog/' | relative_url }})

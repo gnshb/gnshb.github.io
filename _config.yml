@@ -1,6 +1,23 @@
 title: Your Name
-description: undergrad
-remote_theme: pages-themes/minimal@v0.2.0
+description: Personal website for projects, writing, and notes.
+url: ""
+baseurl: ""
+permalink: pretty
 
-plugins:
-  - jekyll-remote-theme
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: posts
+    values:
+      permalink: /blog/:title/
+
+author:
+  name: Your Name
+  role: Builder, writer, and curious human
+  location: Your City
+  email: you@example.com
+  github: yourusername
