@@ -7,32 +7,45 @@
       {% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}
     </title>
     <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 }}" />
-    <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}" />
+    <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="any" />
+    <link rel="stylesheet" href="https://latex.vercel.app/style.css" />
+    <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}" />
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
   <body>
-    <div class="bg-noise"></div>
-    <main class="page">
-      <header class="site-header">
-        <a class="site-name" href="{{ '/' | relative_url }}">{{ site.author.name }}</a>
-        <p class="site-role">{{ site.author.role }}</p>
-        <p class="site-meta">
-          {{ site.author.location }}
-          |
-          <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a>
-        </p>
-        <nav class="site-nav">
-          <a href="{{ '/' | relative_url }}" {% if page.url == '/' or page.url == '/index.html' %}aria-current="page"{% endif %}>Home</a>
-          <a href="{{ '/projects/' | relative_url }}" {% if page.url == '/projects/' or page.url == '/projects.html' %}aria-current="page"{% endif %}>Projects</a>
-          <a href="{{ '/blog/' | relative_url }}" {% if page.url == '/blog/' or page.url contains '/blog/' %}aria-current="page"{% endif %}>Blog</a>
-          <a href="https://github.com/{{ site.author.github }}" rel="noreferrer">GitHub</a>
-        </nav>
-      </header>
+    <header>
+      <h1>{{ site.author.name }}</h1>
+      <p class="author site-meta">
+        {{ site.author.role }}<br />
+        {{ site.author.location }}<br />
+        <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a><br />
+        <a href="https://github.com/{{ site.author.github }}" rel="noreferrer">GitHub</a>
+      </p>
+      <nav>
+        <a href="{{ '/' | relative_url }}" {% if page.url == '/' or page.url == '/index.html' %}aria-current="page"{% endif %}>Home</a>
+        <a href="{{ '/projects/' | relative_url }}" {% if page.url == '/projects/' or page.url == '/projects.html' %}aria-current="page"{% endif %}>Projects</a>
+        <a href="{{ '/blog/' | relative_url }}" {% if page.url == '/blog/' or page.url contains '/blog/' %}aria-current="page"{% endif %}>Blog</a>
+      </nav>
+    </header>
 
-      <section class="content">{{ content }}</section>
-
-      <footer class="site-footer">
-        <small>Copyright {{ "now" | date: "%Y" }} {{ site.author.name }}.</small>
-      </footer>
+    <main>
+      {{ content }}
     </main>
+
+    <footer>
+      <hr />
+      <small>
+        For site styling, I use the phenomenal CSS library
+        <a href="https://latex.vercel.app/" rel="noreferrer">LaTeX.css</a> by
+        <a href="https://github.com/vincentdoerig" rel="noreferrer">Vincent Doerig</a>.
+      </small>
+    </footer>
   </body>
 </html>

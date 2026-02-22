@@ -2,26 +2,34 @@
 title: Home
 ---
 
-## Hi, I am {{ site.author.name }}
+building ...
 
-I build practical software, document what I learn, and share experiments in public.
+<!-- I build software, write about what I learn, and share work in public. -->
 
----
+## About
 
-### What You Will Find Here
+<!-- This site is my public notebook for projects, technical writing, and experiments. -->
 
-- **Projects**: things I am building, shipping, and iterating on.
-- **Blog**: notes on engineering, workflow, and lessons learned.
-- **Now**: what I am focused on this month.
+<!-- - I like shipping small tools that solve repetitive problems. -->
+<!-- - I write short notes on engineering decisions and tradeoffs. -->
+<!-- - I document what works (and what breaks) as I build. -->
 
-### Current Focus
+## Projects
 
-- Designing tools that reduce repetitive work
-- Writing clearer technical documentation
-- Improving product intuition through small weekly builds
+<!-- See [all projects]({{ '/projects/' | relative_url }}). -->
 
-### Quick Links
+<!-- - **Personal Website** -->  
+<!--   Jekyll site for publishing projects and blog posts in a clean text-first format. -->
 
-[View Projects]({{ '/projects/' | relative_url }})  
-[Read Blog]({{ '/blog/' | relative_url }})  
-[GitHub](https://github.com/{{ site.author.github }})
+<!-- ## Recent Writing -->
+
+<!-- {% assign recent_posts = site.posts | sort: "date" | reverse | slice: 0, 3 %} -->
+<!-- {% if recent_posts.size > 0 %} -->
+<!-- {% for post in recent_posts %} -->
+<!-- - [{{ post.title }}]({{ post.url | relative_url }}) ({{ post.date | date: "%B %-d, %Y" }}) -->
+<!-- {% endfor %} -->
+<!-- {% else %} -->
+<!-- - No posts yet. -->
+<!-- {% endif %} -->
+
+<!-- Read more on the [blog]({{ '/blog/' | relative_url }}). -->
