@@ -8,6 +8,7 @@ Minimal Markdown-first site with a tiny Python build step.
 - `content/home.md` for the homepage
 - `content/projects.md` for projects
 - `content/blog.md` for the blog page intro
+- `content/sidebar.md` for the right sidebar
 - `content/posts/*.md` for blog posts
 
 ## Styling

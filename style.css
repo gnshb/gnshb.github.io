@@ -167,14 +167,18 @@ body {
   list-style: disc;
 }
 
-.social-links {
+.widget ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.social-links li + li {
+.widget li + li {
   margin-top: 0.35rem;
+}
+
+.widget-flair p {
+  margin: 0;
 }
 
 .widget-flair img {

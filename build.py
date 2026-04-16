@@ -13,6 +13,7 @@ import yaml
 ROOT = Path(__file__).parent
 CONTENT_DIR = ROOT / "content"
 POSTS_DIR = CONTENT_DIR / "posts"
+SIDEBAR_PATH = CONTENT_DIR / "sidebar.md"
 OUTPUT_DIR = ROOT / "site"
 TEMPLATE_PATH = ROOT / "template.html"
 CONFIG_PATH = ROOT / "site.yaml"
@@ -24,6 +25,12 @@ class Page:
     body: str
     summary: str | None = None
     date: str | None = None
+
+
+@dataclass
+class SidebarSection:
+    title: str | None
+    body: str
 
 
 def parse_markdown(path: Path) -> Page:
@@ -70,42 +77,48 @@ def post_list_html(posts: list[dict[str, str]], limit: int | None = None, *, cla
     return "\n".join(lines)
 
 
-def social_links_html(site: dict[str, str]) -> str:
-    links = [
-        ("X", site.get("x", "#")),
-        ("LinkedIn", site.get("linkedin", "#")),
-        ("GitHub", site["github"]),
-    ]
-    items = [f'<li><a href="{escape(url)}">{escape(label)}</a></li>' for label, url in links]
-    return '<ul class="social-links">' + "".join(items) + "</ul>"
+def parse_sidebar(path: Path) -> list[SidebarSection]:
+    sections: list[SidebarSection] = []
+    title: str | None = None
+    body_lines: list[str] = []
+
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("## "):
+            if title is not None:
+                sections.append(
+                    SidebarSection(
+                        title=None if title == "[no-title]" else title,
+                        body="\n".join(body_lines).strip(),
+                    )
+                )
+            title = line[3:].strip()
+            body_lines = []
+        else:
+            body_lines.append(line)
+
+    if title is not None:
+        sections.append(
+            SidebarSection(
+                title=None if title == "[no-title]" else title,
+                body="\n".join(body_lines).strip(),
+            )
+        )
+
+    return [section for section in sections if section.body]
 
 
-def math_stackexchange_widget(site: dict[str, str]) -> str:
-    url = escape(site["math_stackexchange_url"])
-    image = escape(site["math_stackexchange_flair"])
-    return (
-        '<aside class="widget widget-flair">'
-        f'<a href="{url}">'
-        f'<img src="{image}" width="208" height="58" '
-        'alt="profile for DatBoi at Mathematics Stack Exchange, Q&amp;A for people studying math at any level and professionals in related fields" '
-        'title="profile for DatBoi at Mathematics Stack Exchange, Q&amp;A for people studying math at any level and professionals in related fields" />'
-        "</a>"
-        "</aside>"
-    )
-
-
-def sidebar_html(site: dict[str, str], depth: int) -> str:
-    return (
-        '<aside class="widget">'
-        '<h5 class="widget-title">About</h5>'
-        f'<p>{escape(site["description"])}</p>'
-        "</aside>"
-        '<aside class="widget">'
-        '<h5 class="widget-title">Socials</h5>'
-        f"{social_links_html(site)}"
-        "</aside>"
-        f"{math_stackexchange_widget(site)}"
-    )
+def sidebar_html(sidebar_sections: list[SidebarSection]) -> str:
+    widgets: list[str] = []
+    for section in sidebar_sections:
+        title_html = f'<h5 class="widget-title">{escape(section.title)}</h5>' if section.title else ""
+        widget_class = "widget widget-flair" if section.title is None else "widget"
+        widgets.append(
+            f'<aside class="{widget_class}">'
+            f"{title_html}"
+            f'{md_to_html(section.body)}'
+            "</aside>"
+        )
+    return "".join(widgets)
 
 
 def page_hero(title: str, meta: str | None = None, summary: str | None = None) -> str:
@@ -120,7 +133,7 @@ def page_hero(title: str, meta: str | None = None, summary: str | None = None) -
     )
 
 
-def wrap_page(*, site: dict[str, str], title: str, body_html: str, description: str, depth: int, posts: list[dict[str, str]], hero_html: str = "", body_class: str = "page-default") -> str:
+def wrap_page(*, site: dict[str, str], title: str, body_html: str, description: str, depth: int, posts: list[dict[str, str]], sidebar: str, hero_html: str = "", body_class: str = "page-default") -> str:
     prefix = "./" if depth == 0 else "../" * depth
     page_title = site["title"] if title == "Home" else f"{title} | {site['title']}"
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
@@ -131,7 +144,7 @@ def wrap_page(*, site: dict[str, str], title: str, body_html: str, description: 
         site_title=escape(site["title"]),
         github=escape(site["github"]),
         hero=hero_html,
-        sidebar=sidebar_html(site, depth),
+        sidebar=sidebar,
         body_class=body_class,
         content=body_html,
     )
@@ -144,6 +157,7 @@ def write_page(path: Path, html: str) -> None:
 
 def build() -> None:
     site = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
+    sidebar = sidebar_html(parse_sidebar(SIDEBAR_PATH))
 
     if OUTPUT_DIR.exists():
         shutil.rmtree(OUTPUT_DIR)
@@ -183,6 +197,7 @@ def build() -> None:
             description=post.summary or site["description"],
             depth=2,
             posts=posts,
+            sidebar=sidebar,
             hero_html=page_hero(post.title, meta=f"Posted on {date_text}", summary=post.summary),
             body_class="page-post",
         )
@@ -198,6 +213,7 @@ def build() -> None:
             description=site["description"],
             depth=0,
             posts=posts,
+            sidebar=sidebar,
             hero_html=page_hero(home.title),
             body_class="page-home",
         ),
@@ -214,6 +230,7 @@ def build() -> None:
             description=site["description"],
             depth=1,
             posts=posts,
+            sidebar=sidebar,
             hero_html=page_hero(blog.title, summary=blog.summary),
             body_class="page-blog",
         ),
@@ -229,6 +246,7 @@ def build() -> None:
             description=site["description"],
             depth=1,
             posts=posts,
+            sidebar=sidebar,
             hero_html=page_hero(projects.title),
             body_class="page-projects",
         ),
