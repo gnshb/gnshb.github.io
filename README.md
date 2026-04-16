@@ -23,3 +23,19 @@ python3 build.py
 ```
 
 The generated site goes into `site/` and is deployed by GitHub Actions.
+
+## Deploy
+
+Use the helper script after updating content:
+
+```bash
+./deploy.sh "Describe your update"
+```
+
+What it does:
+
+- builds locally with `python3 build.py`
+- checks that the generated homepage, blog, and projects pages exist
+- commits and pushes your source changes
+- waits for the `Deploy Site` GitHub Actions workflow
+- verifies the live `/`, `/blog/`, and `/projects/` pages

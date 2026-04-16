@@ -9,12 +9,15 @@
     <link rel="stylesheet" href="{prefix}assets/css/latex.css" />
     <link rel="stylesheet" href="{prefix}style.css" />
   </head>
-  <body>
-    <main class="page">
-      <header>
-        <h1><a class="home-link" href="{prefix}">{site_title}</a></h1>
-        <p class="tagline">{site_description}</p>
-        <nav aria-label="Primary">
+  <body class="{body_class}">
+    <div class="site-shell">
+      <header class="site-masthead">
+        <div class="site-brand">
+          <p class="site-kicker">Personal Website</p>
+          <h1><a class="home-link" href="{prefix}">{site_title}</a></h1>
+          <p class="tagline">{site_description}</p>
+        </div>
+        <nav class="site-nav" aria-label="Primary">
           <a href="{prefix}">Home</a>
           <a href="{prefix}projects/">Projects</a>
           <a href="{prefix}blog/">Blog</a>
@@ -22,11 +25,22 @@
         </nav>
       </header>
 
-      {content}
+      <main class="layout">
+        <section class="main-column">
+          {hero}
+          <article class="content-card">
+            {content}
+          </article>
+        </section>
 
-      <footer>
-        <p>Markdown content with self-hosted LaTeX.css.</p>
+        <aside class="sidebar">
+          {sidebar}
+        </aside>
+      </main>
+
+      <footer class="site-footer">
+        <p>Markdown content with self-hosted LaTeX.css and a custom static builder.</p>
       </footer>
-    </main>
+    </div>
   </body>
 </html>
