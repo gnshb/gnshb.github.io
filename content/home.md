@@ -2,11 +2,11 @@
 title: Home
 ---
 
-I build small software, write down what I learn, and keep this site simple.
+Hello
 
 ## About
 
-This site is a public notebook for projects, short technical writing, and useful experiments.
+Computational engineering undergrad at IIT Madras
 
 ## Featured Projects
 
