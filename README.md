@@ -1,22 +1,25 @@
 # Personal Website
 
-Minimal static site. No framework, no build step, no generated output.
+Minimal Markdown-first site with a tiny Python build step.
 
-## Files
+## Edit These Files
 
-- `index.html` for the homepage
-- `projects.html` for projects
-- `blog.html` for the blog index
-- `hello-world.html` for the sample post
-- `assets/css/latex.css` for the self-hosted LaTeX.css base
-- `style.css` for small local overrides
+- `site.yaml` for site title, description, and GitHub link
+- `content/home.md` for the homepage
+- `content/projects.md` for projects
+- `content/blog.md` for the blog page intro
+- `content/posts/*.md` for blog posts
 
-## Edit
+## Styling
 
-- Update the name, tagline, and links directly in the HTML files
-- Add a new post by copying an existing `.html` page and linking it from `blog.html`
-- Add or remove projects directly in `projects.html`
+- `assets/css/latex.css` is the self-hosted LaTeX.css base
+- `style.css` holds the small local overrides
+- `template.html` is the shared page wrapper
 
-## Preview
+## Build
 
-Open `index.html` in a browser.
+```bash
+python3 build.py
+```
+
+The generated site goes into `site/` and is deployed by GitHub Actions.

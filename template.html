@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content="{description}" />
+    <link rel="icon" href="{prefix}favicon.ico" sizes="any" />
+    <link rel="stylesheet" href="{prefix}assets/css/latex.css" />
+    <link rel="stylesheet" href="{prefix}style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header>
+        <h1><a class="home-link" href="{prefix}">{site_title}</a></h1>
+        <p class="tagline">{site_description}</p>
+        <nav aria-label="Primary">
+          <a href="{prefix}">Home</a>
+          <a href="{prefix}projects/">Projects</a>
+          <a href="{prefix}blog/">Blog</a>
+          <a href="{github}">GitHub</a>
+        </nav>
+      </header>
+
+      {content}
+
+      <footer>
+        <p>Markdown content with self-hosted LaTeX.css.</p>
+      </footer>
+    </main>
+  </body>
+</html>

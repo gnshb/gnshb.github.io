@@ -1,3 +1,5 @@
 .claude/
 .codex
 .jekyll-cache/
+_site/
+site/
