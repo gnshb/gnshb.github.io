@@ -1,0 +1,81 @@
+:root {
+  --text: #111111;
+  --muted: #5f5f5f;
+  --line: #dddddd;
+  --bg: #ffffff;
+  --max: 42rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.7 Georgia, "Times New Roman", serif;
+}
+
+.page {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+header {
+  margin-bottom: 3rem;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+a {
+  color: inherit;
+}
+
+.home-link {
+  text-decoration: none;
+}
+
+.tagline,
+.meta,
+footer {
+  color: var(--muted);
+}
+
+h1,
+h2,
+h3,
+p,
+ul {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 1.9rem;
+  margin-bottom: 0.25rem;
+}
+
+h2 {
+  margin-top: 2.5rem;
+  font-size: 1.2rem;
+}
+
+ul {
+  padding-left: 1.2rem;
+}
+
+article + article {
+  margin-top: 1.5rem;
+}
+
+footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}

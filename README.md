@@ -1,48 +1,21 @@
 # Personal Website
 
-Jekyll-based personal site for projects and blog posts.
-Styling uses [LaTeX.css](https://latex.vercel.app/) by Vincent Doerig.
+Minimal static site. No framework, no build step, no generated output.
 
-## Customize Your Identity
+## Files
 
-Edit `_config.yml`:
+- `index.html` for the homepage
+- `projects.html` for projects
+- `blog.html` for the blog index
+- `hello-world.html` for the sample post
+- `style.css` for all styling
 
-- `title`
-- `author.name`
-- `author.role`
-- `author.location`
-- `author.email`
-- `author.github`
+## Edit
 
-## Add A Blog Post
+- Update the name, tagline, and links directly in the HTML files
+- Add a new post by copying an existing `.html` page and linking it from `blog.html`
+- Add or remove projects directly in `projects.html`
 
-1. Create a markdown file in `_posts/` using this naming format:
-   `YYYY-MM-DD-title.md`
-2. Add front matter:
+## Preview
 
-```md
----
-title: My Post Title
-date: 2026-02-22
-summary: One-line summary shown on the blog page.
----
-```
-
-3. Write content below the front matter.
-
-Posts appear automatically on `blog.md`.
-
-## Add A Project
-
-Edit `projects.md` and copy the project block template already included there.
-
-## Styling Notes
-
-- Base styles are loaded from `https://latex.vercel.app/style.css`
-- Small local overrides live in `assets/css/custom.css`
-
-## Run Locally (if Jekyll is installed)
-
-```bash
-jekyll serve
-```
+Open `index.html` in a browser.
