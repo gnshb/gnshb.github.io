@@ -98,7 +98,7 @@ def sidebar_html(site: dict[str, str], depth: int) -> str:
     return (
         '<aside class="widget">'
         '<h5 class="widget-title">About</h5>'
-        f'<p>{escape(site["about"])}</p>'
+        f'<p>{escape(site["description"])}</p>'
         "</aside>"
         '<aside class="widget">'
         '<h5 class="widget-title">Socials</h5>'
