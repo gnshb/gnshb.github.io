@@ -8,7 +8,8 @@ Minimal static site. No framework, no build step, no generated output.
 - `projects.html` for projects
 - `blog.html` for the blog index
 - `hello-world.html` for the sample post
-- `style.css` for all styling
+- `assets/css/latex.css` for the self-hosted LaTeX.css base
+- `style.css` for small local overrides
 
 ## Edit
 
