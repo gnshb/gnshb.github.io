@@ -1,12 +1,11 @@
 ## About
 
-Computational engineering undergrad at IIT Madras.
+Computational engineering 
+undergrad at IIT Madras
 
 ## Socials
 
-- [X](https://x.com/wannabegeometer)
-- [LinkedIn](https://www.linkedin.com/in/ganesh-b-bb493a260/)
-- [GitHub](https://github.com/gnshb)
+[X](https://x.com/wannabegeometer)  [LinkedIn](https://www.linkedin.com/in/ganesh-b-bb493a260/) [GitHub](https://github.com/gnshb)
 
 ## [no-title]
 

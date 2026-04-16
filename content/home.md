@@ -4,7 +4,7 @@ title: Home
 
 Hello
 
-## Featured Projects
+## Projects
 
 - [Personal Website](/projects/)  
   A minimal Markdown-first site with self-hosted LaTeX.css and a tiny build step.
@@ -13,4 +13,4 @@ Hello
 - [Research Notebook](/projects/)  
   A lightweight workflow for keeping experiments, notes, and references organized.
 
-Browse the full list on [Projects](/projects/).
+<!-- Browse the full list on [Projects](/projects/). -->
