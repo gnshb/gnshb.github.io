@@ -70,27 +70,41 @@ def post_list_html(posts: list[dict[str, str]], limit: int | None = None, *, cla
     return "\n".join(lines)
 
 
-def sidebar_html(site: dict[str, str], posts: list[dict[str, str]], depth: int) -> str:
-    prefix = "./" if depth == 0 else "../" * depth
-    recent = post_list_html(posts, limit=4, class_name="sidebar-posts")
+def social_links_html(site: dict[str, str]) -> str:
+    links = [
+        ("X", site.get("x", "#")),
+        ("LinkedIn", site.get("linkedin", "#")),
+        ("GitHub", site["github"]),
+    ]
+    items = [f'<li><a href="{escape(url)}">{escape(label)}</a></li>' for label, url in links]
+    return '<ul class="social-links">' + "".join(items) + "</ul>"
+
+
+def math_stackexchange_widget(site: dict[str, str]) -> str:
+    url = escape(site["math_stackexchange_url"])
+    image = escape(site["math_stackexchange_flair"])
+    return (
+        '<aside class="widget widget-flair">'
+        f'<a href="{url}">'
+        f'<img src="{image}" width="208" height="58" '
+        'alt="profile for DatBoi at Mathematics Stack Exchange, Q&amp;A for people studying math at any level and professionals in related fields" '
+        'title="profile for DatBoi at Mathematics Stack Exchange, Q&amp;A for people studying math at any level and professionals in related fields" />'
+        "</a>"
+        "</aside>"
+    )
+
+
+def sidebar_html(site: dict[str, str], depth: int) -> str:
     return (
         '<aside class="widget">'
         '<h5 class="widget-title">About</h5>'
-        f'<p>{escape(site["description"])}</p>'
+        f'<p>{escape(site["about"])}</p>'
         "</aside>"
         '<aside class="widget">'
-        "<h5 class=\"widget-title\">Explore</h5>"
-        '<ul class="sidebar-links">'
-        f'<li><a href="{prefix}">Home</a></li>'
-        f'<li><a href="{prefix}projects/">Projects</a></li>'
-        f'<li><a href="{prefix}blog/">Blog</a></li>'
-        f'<li><a href="{escape(site["github"])}">GitHub</a></li>'
-        "</ul>"
+        '<h5 class="widget-title">Socials</h5>'
+        f"{social_links_html(site)}"
         "</aside>"
-        '<aside class="widget">'
-        "<h5 class=\"widget-title\">Recent Posts</h5>"
-        f"{recent}"
-        "</aside>"
+        f"{math_stackexchange_widget(site)}"
     )
 
 
@@ -115,10 +129,9 @@ def wrap_page(*, site: dict[str, str], title: str, body_html: str, description: 
         description=escape(description),
         prefix=prefix,
         site_title=escape(site["title"]),
-        site_description=escape(site["description"]),
         github=escape(site["github"]),
         hero=hero_html,
-        sidebar=sidebar_html(site, posts, depth),
+        sidebar=sidebar_html(site, depth),
         body_class=body_class,
         content=body_html,
     )
@@ -176,13 +189,12 @@ def build() -> None:
         write_page(OUTPUT_DIR / "blog" / slug / "index.html", post_html)
 
     home = parse_markdown(CONTENT_DIR / "home.md")
-    home_body = md_to_html(home.body) + "\n<h2>Recent Writing</h2>\n" + post_list_html(posts, limit=3)
     write_page(
         OUTPUT_DIR / "index.html",
         wrap_page(
             site=site,
             title=home.title,
-            body_html=home_body,
+            body_html=md_to_html(home.body),
             description=site["description"],
             depth=0,
             posts=posts,

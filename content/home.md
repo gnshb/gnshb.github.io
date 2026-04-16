@@ -4,10 +4,6 @@ title: Home
 
 Hello
 
-## About
-
-Computational engineering undergrad at IIT Madras
-
 ## Featured Projects
 
 - [Personal Website](/projects/)  
@@ -18,11 +14,3 @@ Computational engineering undergrad at IIT Madras
   A lightweight workflow for keeping experiments, notes, and references organized.
 
 Browse the full list on [Projects](/projects/).
-
-## Writing
-
-- [Why I Moved From Jekyll to a Tiny Builder](/blog/why-i-moved-from-jekyll-to-a-tiny-builder/)
-- [Notes on Building Small Research Tools](/blog/notes-on-building-small-research-tools/)
-- [Hello, World!](/blog/hello-world/)
-
-See all posts on the [Blog](/blog/).

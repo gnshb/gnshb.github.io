@@ -158,15 +158,28 @@ body {
 .entry-content ul,
 .entry-content ol,
 .post-list,
-.sidebar-links,
 .sidebar-posts {
   margin: 0 0 1.5em 3em;
 }
 
 .post-list,
-.sidebar-links,
 .sidebar-posts {
   list-style: disc;
+}
+
+.social-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social-links li + li {
+  margin-top: 0.35rem;
+}
+
+.widget-flair img {
+  max-width: 100%;
+  height: auto;
 }
 
 .widget-area {
