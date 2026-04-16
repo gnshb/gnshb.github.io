@@ -56,13 +56,13 @@ body {
   }
 
   .content-area.column.three-fourths {
-    flex: 0 0 calc(75% - 15px);
-    max-width: calc(75% - 15px);
+    flex: 0 0 calc(73% - 15px);
+    max-width: calc(73% - 15px);
   }
 
   .widget-area.column.fourth {
-    flex: 0 0 calc(25% - 15px);
-    max-width: calc(25% - 15px);
+    flex: 0 0 calc(27% - 15px);
+    max-width: calc(27% - 15px);
   }
 }
 
