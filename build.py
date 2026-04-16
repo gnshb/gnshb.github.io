@@ -74,23 +74,23 @@ def sidebar_html(site: dict[str, str], posts: list[dict[str, str]], depth: int) 
     prefix = "./" if depth == 0 else "../" * depth
     recent = post_list_html(posts, limit=4, class_name="sidebar-posts")
     return (
-        '<section class="sidebar-card">'
-        '<h2>About</h2>'
+        '<aside class="widget">'
+        '<h5 class="widget-title">About</h5>'
         f'<p>{escape(site["description"])}</p>'
-        "</section>"
-        '<section class="sidebar-card">'
-        "<h2>Explore</h2>"
+        "</aside>"
+        '<aside class="widget">'
+        "<h5 class=\"widget-title\">Explore</h5>"
         '<ul class="sidebar-links">'
         f'<li><a href="{prefix}">Home</a></li>'
         f'<li><a href="{prefix}projects/">Projects</a></li>'
         f'<li><a href="{prefix}blog/">Blog</a></li>'
         f'<li><a href="{escape(site["github"])}">GitHub</a></li>'
         "</ul>"
-        "</section>"
-        '<section class="sidebar-card">'
-        "<h2>Recent Posts</h2>"
+        "</aside>"
+        '<aside class="widget">'
+        "<h5 class=\"widget-title\">Recent Posts</h5>"
         f"{recent}"
-        "</section>"
+        "</aside>"
     )
 
 
@@ -98,12 +98,11 @@ def page_hero(title: str, meta: str | None = None, summary: str | None = None) -
     meta_html = f'<p class="page-meta">{escape(meta)}</p>' if meta else ""
     summary_html = f'<p class="page-summary">{escape(summary)}</p>' if summary else ""
     return (
-        '<section class="page-hero">'
-        f"<p class=\"page-label\">{escape(title)}</p>"
-        f"<h2>{escape(title)}</h2>"
+        '<header class="entry-header">'
+        f"<h1 class=\"entry-title\">{escape(title)}</h1>"
         f"{meta_html}"
         f"{summary_html}"
-        "</section>"
+        "</header>"
     )
 
 
@@ -187,7 +186,7 @@ def build() -> None:
             description=site["description"],
             depth=0,
             posts=posts,
-            hero_html="",
+            hero_html=page_hero(home.title),
             body_class="page-home",
         ),
     )

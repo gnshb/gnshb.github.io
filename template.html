@@ -10,36 +10,47 @@
     <link rel="stylesheet" href="{prefix}style.css" />
   </head>
   <body class="{body_class}">
-    <div class="site-shell">
-      <header class="site-masthead">
-        <div class="site-brand">
-          <p class="site-kicker">Personal Website</p>
-          <h1><a class="home-link" href="{prefix}">{site_title}</a></h1>
-          <p class="tagline">{site_description}</p>
+    <div id="page" class="site">
+      <header class="site-header">
+        <div class="container">
+          <div class="site-branding">
+            <p class="site-title"><a class="home-link" href="{prefix}">{site_title}</a></p>
+            <p class="site-description">{site_description}</p>
+          </div>
+          <nav class="main-navigation" aria-label="Primary">
+            <ul class="menu">
+              <li><a href="{prefix}">Home</a></li>
+              <li><a href="{prefix}projects/">Projects</a></li>
+              <li><a href="{prefix}blog/">Blog</a></li>
+              <li><a href="{github}">GitHub</a></li>
+            </ul>
+          </nav>
         </div>
-        <nav class="site-nav" aria-label="Primary">
-          <a href="{prefix}">Home</a>
-          <a href="{prefix}projects/">Projects</a>
-          <a href="{prefix}blog/">Blog</a>
-          <a href="{github}">GitHub</a>
-        </nav>
       </header>
 
-      <main class="layout">
-        <section class="main-column">
-          {hero}
-          <article class="content-card">
-            {content}
-          </article>
-        </section>
+      <div class="container">
+        <div class="site-content">
+          <div class="content-area column three-fourths">
+            <main class="site-main">
+              {hero}
+              <article class="entry">
+                <div class="entry-content">
+                  {content}
+                </div>
+              </article>
+            </main>
+          </div>
 
-        <aside class="sidebar">
-          {sidebar}
-        </aside>
-      </main>
+          <aside class="widget-area column fourth">
+            {sidebar}
+          </aside>
+        </div>
+      </div>
 
       <footer class="site-footer">
-        <p>Markdown content with self-hosted LaTeX.css and a custom static builder.</p>
+        <div class="container">
+          <p>Markdown content with self-hosted LaTeX.css and a custom static builder.</p>
+        </div>
       </footer>
     </div>
   </body>
