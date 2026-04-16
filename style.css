@@ -1,3 +1,10 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+
 body,
 button,
 input,
@@ -9,6 +16,16 @@ textarea {
   line-height: 1.8;
   text-rendering: optimizeLegibility;
   background: #ffffff;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding: 0;
+}
+
+.site {
+  width: 100%;
 }
 
 .container {
@@ -27,25 +44,25 @@ textarea {
 }
 
 @media (min-width: 1024px) {
+  .site-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    padding-top: 2em;
+  }
+
   .column {
-    float: left;
-    padding: 0 15px;
     margin-bottom: 0;
   }
 
-  .column.three-fourths {
-    width: 75%;
+  .content-area.column.three-fourths {
+    flex: 0 0 calc(75% - 15px);
+    max-width: calc(75% - 15px);
   }
 
-  .column.fourth {
-    width: 25%;
-  }
-
-  .site-content {
-    overflow: hidden;
-    margin-left: -15px;
-    margin-right: -15px;
-    padding-top: 2em;
+  .widget-area.column.fourth {
+    flex: 0 0 calc(25% - 15px);
+    max-width: calc(25% - 15px);
   }
 }
 
