@@ -1,6 +1,7 @@
 ## About
 
-Computational engineering undergrad at IIT Madras
+Computational engineering  
+undergrad at IIT Madras
 
 ## Socials
 
