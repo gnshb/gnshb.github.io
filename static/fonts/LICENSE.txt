@@ -1,0 +1,8 @@
+Fonts in this folder are redistributed under the SIL Open Font License 1.1
+(https://openfontlicense.org), which allows using them on a website.
+
+Newsreader        Copyright 2020 The Newsreader Project Authors
+                  (https://github.com/productiontype/Newsreader)
+IBM Plex Mono     Copyright 2017 IBM Corp. (https://github.com/IBM/plex)
+katex/            Copyright (c) 2009-2010 Design Science, Inc.
+                  Copyright (c) 2014-2018 Khan Academy (https://katex.org)

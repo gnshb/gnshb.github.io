@@ -1,0 +1,39 @@
+{{- /* The sidebar on wide screens; a compact header on narrow ones. */ -}}
+{{- $page := . }}
+<header class="rail">
+  <a class="brand" href="{{ site.Home.RelPermalink }}">
+    {{- with site.Params.photo }}
+    <img class="brand-photo" src="{{ strings.TrimPrefix "/" . | relURL }}" alt="" width="144" height="144">
+    {{- else }}
+    {{- partial "mark.html" . }}
+    {{- end }}
+    <span class="brand-name">{{ site.Title }}</span>
+  </a>
+  {{- with site.Params.tagline }}
+  <p class="tagline">{{ . }}</p>
+  {{- end }}
+
+  <nav class="nav" aria-label="Main">
+    <ul>
+      {{- range site.Menus.main }}
+      {{- $current := "" }}
+      {{- with .Page }}
+        {{- if $page.Eq . }}{{ $current = "page" }}
+        {{- else if and .IsSection (.IsAncestor $page) }}{{ $current = "true" }}
+        {{- end }}
+      {{- end }}
+      <li><a href="{{ .URL }}"{{ with $current }} aria-current="{{ . }}"{{ end }}>{{ .Name }}</a></li>
+      {{- end }}
+    </ul>
+  </nav>
+
+  <div class="rail-end">
+    {{- partial "links.html" . }}
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark theme" title="Light / dark">
+      <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+        <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.25"/>
+        <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/>
+      </svg>
+    </button>
+  </div>
+</header>

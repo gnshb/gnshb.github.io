@@ -1,0 +1,7 @@
+{{- with site.Params.links }}
+<ul class="links">
+  {{- range . }}
+  <li><a href="{{ .url }}"{{ if hasPrefix .url "http" }} rel="me"{{ end }}>{{ .name }}</a></li>
+  {{- end }}
+</ul>
+{{- end }}

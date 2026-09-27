@@ -1,0 +1,21 @@
+{{- /* One item in a list of research, projects or posts. The title links to
+      the entry's own page when it has a write-up, or to `link` if set.
+      Call with (dict "page" <page> "level" <heading level, 2 or 3>). */ -}}
+{{- $page := .page }}
+{{- $level := .level | default 2 }}
+{{- $href := "" }}
+{{- if $page.Content }}{{ $href = $page.RelPermalink }}{{ else }}{{ with $page.Params.link }}{{ $href = . }}{{ end }}{{ end }}
+{{- $title := $page.RenderString $page.Title }}
+<li class="entry">
+  <p class="entry-when">{{ partial "when.html" $page }}</p>
+  <div class="entry-body">
+    {{ printf "<h%d class=\"entry-title\">" $level | safeHTML }}
+      {{- with $href }}<a href="{{ . }}">{{ $title }}</a>{{ else }}{{ $title }}{{ end -}}
+    {{ printf "</h%d>" $level | safeHTML }}
+    {{- partial "entry-byline.html" $page }}
+    {{- with $page.Summary }}
+    <div class="entry-summary">{{ . }}</div>
+    {{- end }}
+    {{- partial "entry-links.html" $page }}
+  </div>
+</li>

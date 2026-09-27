@@ -1,0 +1,6 @@
+{{- /* The date shown in the margin: `period` if set, otherwise the date,
+      formatted per section (set `dateFormat` in a section's _index.md). */ -}}
+{{- with .Params.period }}{{ . }}
+{{- else }}
+  {{- if not .Date.IsZero }}{{ .Date | time.Format (.CurrentSection.Params.dateFormat | default "2006") }}{{ end }}
+{{- end -}}

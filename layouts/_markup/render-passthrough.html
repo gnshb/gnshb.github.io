@@ -1,0 +1,11 @@
+{{- /* Renders LaTeX between $...$ or $$...$$ to HTML at build time with KaTeX,
+      so pages need no JavaScript for math. Mistakes show up in red on the page. */ -}}
+{{- $opts := dict "output" "htmlAndMathml" "displayMode" (eq .Type "block") "throwOnError" false }}
+{{- with try (transform.ToMath .Inner $opts) }}
+  {{- with .Err }}
+    {{- warnf "Could not render math %q at %s: %s" $.Inner $.Position . }}
+<code class="math-error">{{ $.Inner }}</code>
+  {{- else }}
+    {{- .Value }}
+  {{- end }}
+{{- end -}}

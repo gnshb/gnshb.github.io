@@ -1,0 +1,8 @@
+{{- /* An entry's `links`: label → URL. External links get an arrow. */ -}}
+{{- with .Params.links }}
+<p class="entry-links">
+  {{- range $name, $url := . }}
+  <a href="{{ $url }}">{{ $name }}{{ if hasPrefix $url "http" }}<span class="ext" aria-hidden="true">↗</span>{{ end }}</a>
+  {{- end }}
+</p>
+{{- end }}

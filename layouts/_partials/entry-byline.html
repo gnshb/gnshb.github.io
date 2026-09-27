@@ -1,0 +1,13 @@
+{{- /* Authors (your own name in bold), venue and tags. Authors and venue accept Markdown. */ -}}
+{{- with .Params.authors }}
+  {{- $authors := cond (reflect.IsSlice .) (delimit . ", ") . }}
+  {{- $authors = $.RenderString $authors | string }}
+  {{- $authors = replace $authors site.Title (printf "<strong>%s</strong>" site.Title) }}
+<p class="entry-authors">{{ $authors | safeHTML }}</p>
+{{- end }}
+{{- with .Params.venue }}
+<p class="entry-venue">{{ $.RenderString . }}</p>
+{{- end }}
+{{- with .Params.tags }}
+<p class="entry-tags">{{ delimit . " · " }}</p>
+{{- end }}

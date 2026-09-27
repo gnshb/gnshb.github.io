@@ -1,0 +1,23 @@
+{{- /* A list page: content/<section>/_index.md followed by its entries.
+      Any new folder in content/ (a blog, say) uses this automatically. */ -}}
+{{ define "main" }}
+<article class="page">
+  <header class="page-header">
+    <h1 class="page-title">{{ .RenderString .Title }}</h1>
+  </header>
+  {{- with .Content }}
+  <div class="prose">
+    {{- . }}
+  </div>
+  {{- end }}
+  {{- with .Pages }}
+  <ol class="entries">
+    {{- range . }}
+    {{ partial "entry.html" (dict "page" . "level" 2) }}
+    {{- end }}
+  </ol>
+  {{- else }}
+  <p class="empty">Nothing here yet.</p>
+  {{- end }}
+</article>
+{{ end }}

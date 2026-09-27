@@ -1,6 +1,13 @@
+# Hugo build output and caches
+public/
+resources/_gen/
+.hugo_build.lock
+
+# Output of the old Python build script
+site/
+
+# Editor and tool files
 .claude/
 .codex
-.jekyll-cache/
-_site/
-site/
+.DS_Store
 *.swp

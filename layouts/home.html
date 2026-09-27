@@ -1,0 +1,33 @@
+{{ define "main" }}
+<article class="page">
+  <header class="page-header">
+    <h1 class="page-title">{{ .RenderString .Title }}</h1>
+  </header>
+  <div class="prose">
+    {{- .Content }}
+  </div>
+
+  {{- /* Previews of the sections listed under params.homeSections in hugo.yaml:
+        featured entries, or the three newest if none are featured. */}}
+  {{- range site.Params.homeSections }}
+    {{- with site.GetPage . }}
+      {{- $section := . }}
+      {{- $entries := where .RegularPages "Params.featured" true }}
+      {{- if not $entries }}{{ $entries = first 3 .RegularPages }}{{ end }}
+      {{- with $entries }}
+  <section class="block">
+    <h2 class="block-title">
+      <span>{{ $section.Title }}</span>
+      <a class="block-more" href="{{ $section.RelPermalink }}">all {{ $section.LinkTitle | lower }} <span aria-hidden="true">→</span></a>
+    </h2>
+    <ol class="entries">
+      {{- range . }}
+      {{ partial "entry.html" (dict "page" . "level" 3) }}
+      {{- end }}
+    </ol>
+  </section>
+      {{- end }}
+    {{- end }}
+  {{- end }}
+</article>
+{{ end }}

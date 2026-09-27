@@ -1,0 +1,26 @@
+{{- /* A single page: a top-level page like About, or an entry inside a section
+      (a research project, a project, a blog post). */ -}}
+{{ define "main" }}
+{{- $isEntry := ne .Section "" }}
+<article class="page{{ if $isEntry }} page-entry{{ end }}">
+  <header class="page-header">
+    {{- if $isEntry }}
+    <p class="kicker">
+      <a href="{{ .CurrentSection.RelPermalink }}"><span aria-hidden="true">← </span>{{ .CurrentSection.Title | lower }}</a>
+      {{- with partial "when.html" . }}<br>{{ . }}{{ end }}
+    </p>
+    {{- end }}
+    <h1 class="page-title">{{ .RenderString .Title }}</h1>
+    {{- if $isEntry }}
+      {{- partial "entry-byline.html" . }}
+      {{- with .Params.summary }}
+    <p class="lede">{{ $.RenderString . }}</p>
+      {{- end }}
+      {{- partial "entry-links.html" . }}
+    {{- end }}
+  </header>
+  <div class="prose">
+    {{- .Content }}
+  </div>
+</article>
+{{ end }}

@@ -1,0 +1,66 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  Site settings. Everything you'll usually want to change is at the top.
+#  Page content lives in content/. See README.md for the full guide.
+# ─────────────────────────────────────────────────────────────────────────────
+
+baseURL: https://gnshb.github.io/
+title: Ganesh Balaji            # your name: sidebar, browser tabs, footer
+locale: en
+
+params:
+  # One line under your name in the sidebar.
+  tagline: Computational engineering undergrad at IIT Madras
+
+  # Used by search engines and link previews.
+  description: Ganesh Balaji, computational engineering undergrad at IIT Madras.
+
+  # Optional photo for the sidebar. Put the file in static/ and point to it,
+  # e.g. "/images/me.jpg" for static/images/me.jpg. Empty = show the logo mark.
+  photo: ""
+
+  # Sections previewed on the home page. Entries marked `featured: true` are
+  # shown; if a section has none featured, its three newest entries are.
+  homeSections: [research, projects]
+
+  # Links in the sidebar (and the footer on phones), in this order.
+  links:
+    - name: github
+      url: https://github.com/gnshb
+    - name: x
+      url: https://x.com/wannabegeometer
+    - name: math.se
+      url: https://math.stackexchange.com/users/734160/datboi
+    # - name: email
+    #   url: mailto:you@example.com
+    # - name: scholar
+    #   url: https://scholar.google.com/citations?user=XXXX
+    # - name: cv
+    #   url: /cv.pdf                # put cv.pdf in static/
+
+# The navigation menu, in order. To add a page, create it in content/ and list it here.
+menus:
+  main:
+    - { name: home,     pageRef: /,         weight: 1 }
+    - { name: about,    pageRef: /about,    weight: 2 }
+    - { name: research, pageRef: /research, weight: 3 }
+    - { name: projects, pageRef: /projects, weight: 4 }
+    # - { name: blog,   pageRef: /blog,     weight: 5 }
+
+# ── You shouldn't need to change anything below this line. ──────────────────
+
+disableKinds: [taxonomy, term]    # no /tags/ or /categories/ pages
+enableRobotsTXT: true
+buildFuture: true                 # show entries dated in the future (e.g. upcoming talks)
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true                # allow raw HTML inside Markdown
+    extensions:
+      passthrough:                # LaTeX math: $...$ inline, $$...$$ display
+        enable: true
+        delimiters:
+          inline: [['$', '$'], ['\(', '\)']]
+          block: [['$$', '$$'], ['\[', '\]']]
+  highlight:
+    noClasses: false              # code colours come from assets/css/main.css

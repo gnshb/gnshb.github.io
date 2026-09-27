@@ -1,0 +1,41 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{- $title := cond .IsHome site.Title (printf "%s · %s" .Title site.Title) }}
+{{- $description := .Description | default .Params.summary | default site.Params.description | plainify | htmlUnescape }}
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description }}">
+<link rel="canonical" href="{{ .Permalink }}">
+
+<meta property="og:type" content="{{ cond .IsPage "article" "website" }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ cond .IsHome site.Title .Title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:url" content="{{ .Permalink }}">
+{{- with site.Params.photo }}
+<meta property="og:image" content="{{ strings.TrimPrefix "/" . | absURL }}">
+{{- end }}
+<meta name="twitter:card" content="summary">
+
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141312" media="(prefers-color-scheme: dark)">
+
+{{- /* Theme switcher: runs before the page paints, so there's no flash of the wrong theme. */}}
+{{- with resources.Get "js/theme.js" | minify }}
+<script>{{ .Content | safeJS }}</script>
+{{- end }}
+
+<link rel="preload" href="{{ "fonts/newsreader-roman-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/ibm-plex-mono-400-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+{{- $css := slice (resources.Get "css/fonts.css") (resources.Get "css/katex.css") (resources.Get "css/main.css") | resources.Concat "css/site.css" }}
+{{- if hugo.IsProduction }}
+  {{- $css = $css | minify | fingerprint }}
+{{- end }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ with $css.Data.Integrity }} integrity="{{ . }}" crossorigin="anonymous"{{ end }}>
+
+<link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="32x32">
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+{{- range .AlternativeOutputFormats }}
+<link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}">
+{{- end }}

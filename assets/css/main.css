@@ -1,0 +1,639 @@
+/* =============================================================================
+   Site styles
+   -----------------------------------------------------------------------------
+   The tokens in :root control colour, type and spacing everywhere.
+   Colours are written as light-dark(<light theme>, <dark theme>).
+   ========================================================================== */
+
+:root {
+  /* Colour */
+  --paper:  light-dark(#fbfaf7, #141312);  /* background */
+  --ink:    light-dark(#1c1b19, #e9e6df);  /* text */
+  --ink-2:  light-dark(#46423c, #c9c4ba);  /* secondary text */
+  --muted:  light-dark(#6b665e, #9d978c);  /* dates, labels */
+  --rule:   light-dark(#e4dfd6, #2c2926);  /* hairlines */
+  --wash:   light-dark(#f2efe8, #1d1b19);  /* code background */
+  --accent: light-dark(#b3391c, #ec8c6c);  /* the red ink */
+
+  /* Type */
+  --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --mono:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Layout */
+  --rail:    13rem;    /* sidebar width on wide screens */
+  --gutter:  7.25rem;  /* margin column for dates and labels */
+  --gap:     1.75rem;  /* space between the margin column and the text */
+  --measure: 35rem;    /* width of the text column */
+  --pad:     1.25rem;  /* space at the screen edges */
+  --indent:  0px;      /* how far text sits from the margin column; set below */
+
+  color-scheme: light dark;
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark; }
+
+/* Browsers from before 2024 don't know light-dark(); they get the light theme. */
+@supports not (color: light-dark(#000, #fff)) {
+  :root {
+    --paper: #fbfaf7; --ink: #1c1b19; --ink-2: #46423c; --muted: #6b665e;
+    --rule: #e4dfd6; --wash: #f2efe8; --accent: #b3391c;
+  }
+}
+
+@media (min-width: 45em) {
+  :root { --pad: 2rem; --indent: calc(var(--gutter) + var(--gap)); }
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+}
+
+@media (min-width: 45em) {
+  body { font-size: 1.1875rem; }
+}
+
+a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  text-underline-offset: 0.2em;
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+
+a:hover { color: var(--accent); text-decoration-color: currentColor; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+
+img, svg, video { max-width: 100%; height: auto; }
+
+.skip-link {
+  position: absolute;
+  top: -4rem;
+  left: 1rem;
+  z-index: 10;
+  padding: 0.5rem 0.75rem;
+  background: var(--ink);
+  color: var(--paper);
+  font: 500 0.8rem/1 var(--mono);
+  text-decoration: none;
+}
+
+.skip-link:focus { top: 1rem; }
+
+/* ---------------------------------------------------------------------------
+   Layout: a sidebar ("rail") beside the page on wide screens,
+   a header above it on narrow ones.
+   ------------------------------------------------------------------------- */
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-width: calc(var(--gutter) + var(--gap) + var(--measure) + 2 * var(--pad));
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+.main { flex: 1 0 auto; padding-bottom: 3.5rem; }
+
+.page { max-width: calc(var(--gutter) + var(--gap) + var(--measure)); }
+
+@media (min-width: 70em) {
+  .shell {
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, calc(var(--gutter) + var(--gap) + var(--measure)));
+    grid-template-rows: 1fr auto;
+    justify-content: center;
+    column-gap: clamp(2.5rem, 4vw, 4.5rem);
+    max-width: none;
+  }
+
+  .rail   { grid-column: 1; grid-row: 1 / span 2; }
+  .main   { grid-column: 2; padding-top: 5rem; }
+  .footer { grid-column: 2; }
+}
+
+/* ---------------------------------------------------------------------------
+   Rail: name, navigation, links
+   ------------------------------------------------------------------------- */
+
+.rail {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.9rem 1rem;
+  margin-bottom: 2.75rem;
+  padding: 1.25rem 0 0.9rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.brand:hover { color: var(--ink); }
+
+.mark {
+  flex: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+}
+
+.brand-photo {
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.brand-name {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.tagline { display: none; }
+
+.nav { grid-column: 1 / -1; grid-row: 2; }
+
+.nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav a { position: relative; color: var(--muted); text-decoration: none; }
+.nav a:hover, .nav a[aria-current] { color: var(--ink); }
+
+.nav a[aria-current] {
+  text-decoration: underline 1.5px var(--accent);
+  text-underline-offset: 0.5em;
+}
+
+.rail-end { grid-column: 2; grid-row: 1; display: flex; }
+.rail .links { display: none; }
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.links a { color: var(--muted); text-decoration: none; }
+.links a:hover { color: var(--accent); }
+
+.theme-toggle {
+  display: inline-flex;
+  margin: -0.4rem;
+  padding: 0.4rem;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.theme-toggle:hover { color: var(--ink); }
+
+@media (min-width: 70em) {
+  .rail {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100vh;
+    height: 100dvh;
+    /* The negative margin makes room for the current-page dot beside the nav. */
+    margin: 0 0 0 -1.25rem;
+    padding: 5rem 0 2.25rem 1.25rem;
+    overflow-y: auto;
+    border: 0;
+  }
+
+  .brand { flex-direction: column; align-items: flex-start; gap: 1.1rem; }
+  .mark { width: 2.2rem; height: 2.2rem; stroke-width: 1.2; }
+  .brand-photo { width: 9rem; height: 9rem; border-radius: 4px; }
+  .brand-name { font-size: 1.65rem; }
+
+  .tagline {
+    display: block;
+    margin: 0.55rem 0 0;
+    font-family: var(--serif);
+    font-size: 1.02rem;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--muted);
+  }
+
+  .nav { margin-top: 2.75rem; }
+  .nav ul { flex-direction: column; gap: 0.4rem; }
+  .nav a[aria-current] { text-decoration: none; }
+
+  .nav a[aria-current]::before {
+    content: "";
+    position: absolute;
+    top: 0.5em;
+    left: -1rem;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .rail-end { flex-direction: column; align-items: flex-start; gap: 1.1rem; margin-top: auto; }
+  .rail .links { display: flex; flex-direction: column; }
+}
+
+/* ---------------------------------------------------------------------------
+   Page header
+   ------------------------------------------------------------------------- */
+
+.page-header { margin-bottom: 2.25rem; }
+
+.page-title {
+  margin: 0;
+  font-size: clamp(2.1rem, 1.5rem + 2.2vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.kicker {
+  margin: 0 0 0.9rem;
+  font: 400 0.78rem/1.6 var(--mono);
+  color: var(--muted);
+}
+
+.kicker a { text-decoration: none; }
+
+.lede {
+  margin: 1rem 0 0;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+/* On wider screens the header sits in the text column, and the kicker
+   (section and date) hangs in the margin beside the title. */
+@media (min-width: 45em) {
+  .page-header {
+    display: grid;
+    grid-template-columns: var(--gutter) minmax(0, 1fr);
+    column-gap: var(--gap);
+    align-items: baseline;
+  }
+
+  .page-header > * { grid-column: 2; }
+  .page-header > .kicker { grid-column: 1; grid-row: 1; margin: 0; }
+}
+
+/* ---------------------------------------------------------------------------
+   Prose: Markdown content
+   ------------------------------------------------------------------------- */
+
+.prose > * { margin-left: var(--indent); }
+.prose > :is(h2, dl) { margin-left: 0; }
+
+.prose p,
+.prose ul,
+.prose ol,
+.prose blockquote,
+.prose pre,
+.prose table,
+.prose figure {
+  margin-top: 0;
+  margin-bottom: 1.1rem;
+}
+
+.prose p { text-wrap: pretty; }
+
+.prose h2,
+.block-title {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 2.75rem;
+  margin-bottom: 1.4rem;
+  font: 500 0.75rem/1.2 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.prose h2::after,
+.block-title::after {
+  content: "";
+  flex: 1;
+  order: 1;
+  border-top: 1px solid var(--rule);
+}
+
+.prose h3 {
+  margin-top: 2.25rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.prose h4 { margin-top: 1.75rem; margin-bottom: 0.4rem; font-size: 1rem; font-weight: 600; }
+
+.prose ul, .prose ol { padding-left: 1.25em; }
+.prose li { margin-block: 0.25rem; }
+.prose li::marker { color: var(--muted); }
+
+/* Definition lists (a date, then ": text" on the next line) put the date
+   in the margin. Used for news, education, experience and so on. */
+.prose dl { margin-top: 0; margin-bottom: 1.1rem; }
+.prose dt { font: 400 0.78rem/1.6 var(--mono); color: var(--muted); }
+.prose dd { margin: 0.1rem 0 1.15rem; }
+.prose dd:last-child { margin-bottom: 0; }
+.prose dd > p { margin: 0; }
+
+@media (min-width: 45em) {
+  .prose dl {
+    display: grid;
+    grid-template-columns: var(--gutter) minmax(0, 1fr);
+    column-gap: var(--gap);
+    align-items: baseline;
+  }
+
+  .prose dt { grid-column: 1; }
+  .prose dd { grid-column: 2; margin-top: 0; }
+}
+
+.prose blockquote {
+  margin-right: 0;
+  padding-left: 1.1rem;
+  border-left: 2px solid var(--accent);
+  font-style: italic;
+  color: var(--ink-2);
+}
+
+.prose hr {
+  margin-block: 2.5rem;
+  border: 0;
+  text-align: center;
+}
+
+.prose hr::after { content: "* * *"; color: var(--muted); letter-spacing: 0.4em; }
+
+.prose figure { margin-right: 0; }
+.prose figcaption { margin-top: 0.5rem; font-size: 0.95rem; font-style: italic; color: var(--muted); }
+.prose img { display: block; }
+
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.prose th {
+  padding: 0.4rem 1.25rem 0.4rem 0;
+  border-bottom: 1px solid var(--muted);
+  font: 500 0.72rem/1.4 var(--mono);
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.prose td {
+  padding: 0.45rem 1.25rem 0.45rem 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: baseline;
+}
+
+.footnotes {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.95rem;
+  color: var(--ink-2);
+}
+
+.footnotes hr { display: none; }
+.footnote-ref, .footnote-backref { color: var(--accent); text-decoration: none; }
+
+/* ---------------------------------------------------------------------------
+   Code
+   ------------------------------------------------------------------------- */
+
+code, kbd, samp, pre { font-family: var(--mono); }
+
+:not(pre) > code {
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+  background: var(--wash);
+  font-size: 0.82em;
+}
+
+pre {
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  border-radius: 4px;
+  background: var(--wash);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.highlight pre { margin: 0; }
+.highlight { margin-bottom: 1.1rem; }
+
+/* Syntax colours (Hugo's highlighter, Chroma). */
+.chroma .c, .chroma .ch, .chroma .cm, .chroma .c1, .chroma .cs,
+.chroma .cp, .chroma .cpf { color: var(--muted); font-style: italic; }
+.chroma .k, .chroma .kc, .chroma .kd, .chroma .kn, .chroma .kp,
+.chroma .kr, .chroma .kt, .chroma .ow { color: var(--accent); }
+.chroma .s, .chroma .sa, .chroma .sb, .chroma .sc, .chroma .dl, .chroma .sd,
+.chroma .s2, .chroma .se, .chroma .sh, .chroma .si, .chroma .sx, .chroma .sr,
+.chroma .s1, .chroma .ss { color: light-dark(#3f6a3a, #a3c794); }
+.chroma .m, .chroma .mb, .chroma .mf, .chroma .mh, .chroma .mi, .chroma .il,
+.chroma .mo { color: light-dark(#6f4a93, #c3a6e0); }
+.chroma .nf, .chroma .fm, .chroma .nc { font-weight: 500; }
+.chroma .hl { display: block; background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.chroma .ln, .chroma .lnt { margin-right: 0.8em; color: var(--muted); }
+
+/* ---------------------------------------------------------------------------
+   Math (KaTeX)
+   ------------------------------------------------------------------------- */
+
+.katex { font-size: 1.04em; }
+.katex-display { margin-block: 1.5rem; padding-block: 0.2rem; overflow-x: auto; overflow-y: hidden; }
+/* LaTeX that doesn't parse is shown as source; hover it to see the error. */
+.math-error, .katex-error { color: var(--accent) !important; font-family: var(--mono); font-size: 0.85em; }
+
+/* ---------------------------------------------------------------------------
+   Lists of entries: research, projects, posts
+   ------------------------------------------------------------------------- */
+
+.block { margin-top: 3.5rem; }
+.block .block-title { margin-top: 0; }
+
+.block-more {
+  order: 2;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.block-more:hover { color: var(--accent); }
+
+.entries { margin: 0; padding: 0; list-style: none; }
+.prose + .entries { margin-top: 2.75rem; }
+.entry { margin-bottom: 2.1rem; }
+.entry:last-child { margin-bottom: 0; }
+
+.entry-when {
+  margin: 0 0 0.15rem;
+  font: 400 0.78rem/1.6 var(--mono);
+  color: var(--muted);
+}
+
+.entry-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+/* A title that links to a write-up gets a faint underline. */
+.entry-title a { text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.entry-title a:hover { text-decoration-color: currentColor; }
+
+.entry-authors,
+.entry-venue {
+  margin: 0.2rem 0 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.entry-authors strong { font-weight: 600; color: var(--ink); }
+.entry-venue { font-style: italic; }
+
+.entry-tags {
+  margin: 0.3rem 0 0;
+  font: 400 0.78rem/1.6 var(--mono);
+  color: var(--muted);
+}
+
+.page-header .entry-authors,
+.page-header .entry-venue { margin-top: 0.75rem; font-size: 1.05rem; }
+.page-header .entry-authors + .entry-venue { margin-top: 0.1rem; }
+
+.entry-summary { margin-top: 0.4rem; font-size: 1.03rem; line-height: 1.55; color: var(--ink-2); }
+.entry-summary p { margin: 0; }
+
+.entry-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 1rem;
+  margin: 0.6rem 0 0;
+  font: 400 0.78rem/1.6 var(--mono);
+}
+
+.entry-links a { color: var(--accent); text-decoration: none; }
+.entry-links a:hover { text-decoration: underline; }
+.entry-links .ext { margin-left: 0.2em; }
+
+.page-header .entry-links { margin-top: 1rem; }
+
+.empty { margin-left: var(--indent); color: var(--muted); font-style: italic; }
+
+@media (min-width: 45em) {
+  .entry {
+    display: grid;
+    grid-template-columns: var(--gutter) minmax(0, 1fr);
+    column-gap: var(--gap);
+    align-items: baseline;
+  }
+
+  .entry-when { margin: 0; }
+}
+
+/* ---------------------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------------------- */
+
+.footer {
+  max-width: calc(var(--gutter) + var(--gap) + var(--measure));
+  padding: 1.25rem 0 2.5rem;
+  border-top: 1px solid var(--rule);
+  font: 400 0.75rem/1.6 var(--mono);
+  color: var(--muted);
+}
+
+.footer p { margin: 0; }
+.footer .links { margin-bottom: 0.5rem; }
+
+@media (min-width: 70em) {
+  .footer .links { display: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   Print and motion
+   ------------------------------------------------------------------------- */
+
+@media print {
+  :root { color-scheme: light; }
+  .nav, .rail-end, .footer .links, .skip-link { display: none; }
+  .shell { display: block; max-width: none; padding: 0; }
+  .rail { position: static; height: auto; margin-bottom: 1.5rem; padding: 0; border: 0; }
+  body { font-size: 11pt; }
+  a { text-decoration: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
